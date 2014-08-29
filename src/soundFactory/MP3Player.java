@@ -27,80 +27,32 @@ public class MP3Player implements Runnable
 		Thread thread = new Thread(this);
 		thread.start();
 	}
-
-	@Override
-	public void run()
-	{
-		while(true) // Keeps the music player going....
-		{
-			//System.out.println("x");
-			if (loaded)
-			{
-				byte[] data = new byte[4096];
-				SourceDataLine line;
-				try 
-				{
-					line = getLine(decodedFormat);
-					if (line != null)
-					{
-						// Point to the Location of play address
-						line.start();
-						int nBytesRead = 0 ;
-						@SuppressWarnings("unused")
-						int nBytesWritten = 0;
-						while (play==true && nBytesRead != -1)
-						{
-							if(!pause) // won't execute in pause mode
-							{
-								line.start(); // in case a pause was in place, else won't do anything
-								nBytesRead = din.read(data, 0, data.length);
-								if (nBytesRead != -1) nBytesWritten = line.write(data, 0, nBytesRead);
-							}
-							else
-							{
-								line.stop(); // stop at given address during pause so it can resume
-							}
-						}
-						// Done Playing the music
-						line.drain();
-						line.stop();
-						line.close();
-						din.close();
-						in.close();
-					} 
-				} 
-				catch (LineUnavailableException | IOException e) 
-				{
-					e.printStackTrace();
-				} 
-				//ReLoads music to play again.  
-			}
-			// Loads/Refreshes the mp3 URL again, when its complete
-			load(mp3URL);
-		}
-	}
 	
-	
+	//Sets Play to true, and will play the music if a URL has been loaded
 	public void play()
 	{ 
 		play=true; 
 	}
 
+	//sets play to false, and won't play the song. Acts as a stop 
 	public void end()
 	{
 		play=false;
 	}
 
+	//Pauses at the specific location of the mp3 file
 	public void pause()
 	{
 		pause=true;
 	}
 
+	//Unpauses the mp3 file at the pause location
 	public void unPause()
 	{
 		pause=false;
 	}	
 	
+	//Loads an mp3 file from a given URL
 	public void load(String mp3URL)
 	{
 		this.mp3URL=mp3URL;
@@ -127,6 +79,61 @@ public class MP3Player implements Runnable
 	    loaded=true;
 	} 
 
+	
+	//Run the Mp3 player in an independent thread
+	@Override
+	public void run()
+	{
+		while(true) // Keeps the music player going....
+		{
+			if (loaded)// if a URL has been loaded then perform actions
+			{
+				byte[] data = new byte[4096];
+				SourceDataLine line;
+				try 
+				{
+					line = getLine(decodedFormat);
+					if (line != null)
+					{
+						// Point to the Location of play frame on the file
+						line.start();
+						int nBytesRead = 0 ;
+						@SuppressWarnings("unused")
+						int nBytesWritten = 0;
+						
+						//Play the music only if play is true
+						while (play==true && nBytesRead != -1)
+						{
+							if(!pause) // won't execute in pause mode
+							{
+								line.start(); // in case a pause was in place, else won't do anything
+								nBytesRead = din.read(data, 0, data.length);
+								if (nBytesRead != -1) nBytesWritten = line.write(data, 0, nBytesRead);
+							}
+							else
+							{
+								line.stop(); // stop at given address during pause so it can resume
+							}
+						}
+						// Done Playing the music, stop
+						line.drain();
+						line.stop();
+						line.close();
+						din.close();
+						in.close();
+					} 
+				} 
+				catch (LineUnavailableException | IOException e) 
+				{
+					e.printStackTrace();
+				} 
+				//ReLoads music to play again.  
+			}
+			// Loads/Refreshes the mp3 URL again, when its complete
+			load(mp3URL);
+		}
+	}
+	
 	private SourceDataLine getLine(AudioFormat audioFormat) throws LineUnavailableException
 	{
 		SourceDataLine res = null;
