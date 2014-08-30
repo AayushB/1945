@@ -23,7 +23,11 @@ public class GamePlayPanel extends JPanel implements Runnable
 	private Ocean ocean;
 	private OceanGradient oceanGradient;
 	private Player player1;
-	//---------------------------------------------------------//	
+	//---------------------------------------------------------//
+	
+	//Thread
+	private Thread thread;
+	private boolean end;
 		
 	public GamePlayPanel(int x, int y, int width, int height, KeyboardListener kListener)
 	{
@@ -56,14 +60,14 @@ public class GamePlayPanel extends JPanel implements Runnable
 		//Lets set up our thread and run it 
 		// The this here refers to the run() method as our JPanel implements Runnable
 		//This will automatically start the run() method
-		Thread thread= new Thread(this);
-		thread.start();
+		end=false;
+		thread= new Thread(this);
 	}
 	
 	@Override
 	public void run() 
 	{
-		while (true)
+		while (!end)
 		{
 			//-------------------------------------------------------
 			//						Updates
@@ -130,5 +134,17 @@ public class GamePlayPanel extends JPanel implements Runnable
 			page.fillRect(505, 200, 10, 30);
 		}
 	}
+	
+	//Start
+		public void start()
+		{
+			thread.start();
+		}
+		
+		//safely ends process of run in the Story Panel
+		public void end()
+		{
+			end=true;
+		}
 
 }

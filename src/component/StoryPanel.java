@@ -30,7 +30,8 @@ public class StoryPanel extends JPanel implements Runnable
 	private MP3Player happyBackgroundSound;
 	private MP3Player pauseSound;
 	
-	//End story
+	//Thread
+	private Thread thread;
 	private boolean end;
 	
 	public StoryPanel(int panelWidth, int panelHeight)
@@ -88,8 +89,7 @@ public class StoryPanel extends JPanel implements Runnable
 		// The this here refers to the run() method as our JPanel implements Runnable
 		//This will automatically start the run() method
 		end=false;
-		Thread thread= new Thread(this);
-		thread.start();
+		thread= new Thread(this);
 	}
 	
 	@Override
@@ -153,6 +153,14 @@ public class StoryPanel extends JPanel implements Runnable
 		super.paint(page); //Displaying the default background (avoid flickering)
 		radar.drawImage(page, 450, 502);
 		navBar.drawImage(page, 0, 0);
+	}
+	
+	
+	//Starts the thread, and all other threads in the class
+	public void start()
+	{
+		thread.start();
+		gamePanel.start();
 	}
 	
 	//safely ends process of run in the Story Panel

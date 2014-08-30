@@ -1,6 +1,8 @@
 package component;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -16,7 +18,15 @@ public class MainMenuPanel extends JPanel implements Runnable
 	private MenuButton highscoreButton;
 	private MenuButton creditsButton;	
 	private MainMenu background;
-
+	//Button clicked
+	private boolean playClicked=false;
+	private boolean howClicked=false;
+	private boolean scoreClicked=false;
+	private boolean creditsClicked=false;
+	//Thread
+	private Thread thread;
+	private boolean end;
+	
 	public MainMenuPanel(int panelWidth, int panelHeight)
 	{
 		background=new MainMenu("../img/sky.jpg");//placeholder for now
@@ -30,24 +40,75 @@ public class MainMenuPanel extends JPanel implements Runnable
 		
 		playButton = new MenuButton(400, 250, 200, 70);
 		playButton.setText("Play");
-		//playButton.addActionListener(l);
+		playButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				MainMenuPanel.this.playClicked=true;
+			}
+		});
 		this.add(playButton);
 		
 		howToPlayButton = new MenuButton(400, 330, 200, 70);
 		howToPlayButton.setText("How to Play");
+		howToPlayButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				MainMenuPanel.this.howClicked=true;
+			}
+		});
 		this.add(howToPlayButton);
 		
 		highscoreButton = new MenuButton(400, 410, 200, 70);
 		highscoreButton.setText("High Score");
+		highscoreButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				MainMenuPanel.this.scoreClicked=true;
+			}
+		});
 		this.add(highscoreButton);
 		
 		creditsButton = new MenuButton(400, 490, 200, 70);
 		creditsButton.setText("Credits");
+		creditsButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				MainMenuPanel.this.creditsClicked=true;
+			}
+		});
 		this.add(creditsButton);
 		
-		Thread thread= new Thread(this);
-		thread.start();
+		end=false;
+		thread= new Thread(this);
 		
+	}
+	
+	public boolean getPlayClicked()
+	{
+		return playClicked;
+	}
+	
+	public boolean getHowToPlayClicked()
+	{
+		return howClicked;
+	}
+	
+	public boolean getHighScoreClicked()
+	{
+		return scoreClicked;
+	}
+	
+	public boolean getCreditsClicked()
+	{
+		return creditsClicked;
 	}
 	
 	@Override
@@ -62,10 +123,11 @@ public class MainMenuPanel extends JPanel implements Runnable
 	}
 	
 	@Override
-	public void run() {
+	public void run() 
+	{
 		// TODO Auto-generated method stub
 		
-		while(true)
+		while(!end)
 		{
 			try 
 			{
@@ -77,6 +139,19 @@ public class MainMenuPanel extends JPanel implements Runnable
 		}
 		
 	}
+	
+	//Starts the thread, and all other threads in the class
+		public void start()
+		{
+			thread.start();
+		}
+		
+		//safely ends process of run in the Story Panel
+		public void end()
+		{
+			end=true;
+		}
+		
 	
 }
 
