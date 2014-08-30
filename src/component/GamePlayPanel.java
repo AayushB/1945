@@ -35,7 +35,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 		scr=new ScreenDimension(0,0,width,height);
 		
 		//setting up GamePlayPanel
-		setFocusable(true);//lets the user interact with keyboard
+
 		setBounds(x, y, width, height);
 		setDoubleBuffered(true);
 		
@@ -138,6 +138,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 	//Start
 		public void start()
 		{
+			end=false;
 			thread.start();
 		}
 		

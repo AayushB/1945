@@ -96,9 +96,19 @@ public class MainMenuPanel extends JPanel implements Runnable
 		return playClicked;
 	}
 	
+	public void setPlayClicked(boolean playClicked)
+	{
+		this.playClicked=playClicked;
+	}
+	
 	public boolean getHowToPlayClicked()
 	{
 		return howClicked;
+	}
+	
+	public void setHowToPlayClicked(boolean howClicked)
+	{
+		this.howClicked=howClicked;
 	}
 	
 	public boolean getHighScoreClicked()
@@ -106,9 +116,19 @@ public class MainMenuPanel extends JPanel implements Runnable
 		return scoreClicked;
 	}
 	
+	public void setHighScoreClicked(boolean scoreClicked)
+	{
+		this.scoreClicked=scoreClicked;
+	}
+	
 	public boolean getCreditsClicked()
 	{
 		return creditsClicked;
+	}
+	
+	public void setCreditsClicked(boolean creditsClicked)
+	{
+		this.creditsClicked=creditsClicked;
 	}
 	
 	@Override
@@ -131,7 +151,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		{
 			try 
 			{
-				Thread.sleep(60);
+				Thread.sleep(1);
 			} 
 			catch (InterruptedException e) {}
 			
@@ -143,7 +163,9 @@ public class MainMenuPanel extends JPanel implements Runnable
 	//Starts the thread, and all other threads in the class
 		public void start()
 		{
+			end=false;
 			thread.start();
+			this.validate();
 		}
 		
 		//safely ends process of run in the Story Panel

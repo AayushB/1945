@@ -12,6 +12,7 @@ public class StartingPoint extends Applet implements Runnable
 	private StoryPanel storyPanel;
 	private int appletWidth;
 	private int appletHeight;
+	private KeyboardListener kListener;
 	
 	//Initialize the Applet
 		@Override
@@ -37,10 +38,13 @@ public class StartingPoint extends Applet implements Runnable
 			//Applet setup and component adding
 			this.setSize(appletWidth, appletHeight); // width, height
 			this.setBackground(Color.BLACK); 
+			this.setFocusable(true);
+			kListener=new KeyboardListener();
+			this.addKeyListener(kListener);
 			
 			//setting up component panels
 			mainMenuPanel = new MainMenuPanel(appletWidth, appletHeight);
-			storyPanel= new StoryPanel(appletWidth, appletHeight);
+			storyPanel= new StoryPanel(appletWidth, appletHeight, kListener);
 			
 			Thread thread= new Thread(this);
 			thread.start();
@@ -49,14 +53,41 @@ public class StartingPoint extends Applet implements Runnable
 		@Override
 		public void run() 
 		{
-			 //this.add(storyPanel);
-			//storyPanel.start();
-			//storyPanel.invalidate();
-			//this.removeAll();
-			//mainMenuPanel=null;
-			//this.add(storyPanel);
+			mainMenuPanel.start();
+			this.add(mainMenuPanel);
+			
+			while (true)
+			{
+				//while in menu
+				if(mainMenuPanel.getPlayClicked())
+				{
+					 //System.out.println("Here");
+					mainMenuPanel.setPlayClicked(false);
+					mainMenuPanel.end();
+					this.remove(mainMenuPanel);
+					//mainMenuPanel=null;
+					this.setFocusable(true);
+					
+					
+					storyPanel.start();
+					this.add(storyPanel);
+					this.validate();			
+				}
+				//while in a different screen
+				try 
+				{
+					Thread.sleep(10);
+				} 
+				catch (InterruptedException e) {}
+			}
 				
-		}
+				
+				
+				
+				//
+				
+			}
+
 		
-	}
+}
 

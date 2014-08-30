@@ -34,7 +34,7 @@ public class StoryPanel extends JPanel implements Runnable
 	private Thread thread;
 	private boolean end;
 	
-	public StoryPanel(int panelWidth, int panelHeight)
+	public StoryPanel(int panelWidth, int panelHeight, KeyboardListener kListener)
 	{
 		
 		//setting up StoryPanel
@@ -57,7 +57,8 @@ public class StoryPanel extends JPanel implements Runnable
 	
 		//setting up KeyboardListener
 		
-		kListener=new KeyboardListener();
+		this.kListener=kListener;
+		this.addKeyListener(kListener);
 		
 		//setting up Background Music
 		happyBackgroundSound= new MP3Player();
@@ -159,8 +160,10 @@ public class StoryPanel extends JPanel implements Runnable
 	//Starts the thread, and all other threads in the class
 	public void start()
 	{
+		end=false;
 		thread.start();
 		gamePanel.start();
+		
 	}
 	
 	//safely ends process of run in the Story Panel
