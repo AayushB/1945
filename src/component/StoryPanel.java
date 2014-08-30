@@ -30,15 +30,11 @@ public class StoryPanel extends JPanel implements Runnable
 	private MP3Player happyBackgroundSound;
 	private MP3Player pauseSound;
 	
+	//End story
+	private boolean end;
+	
 	public StoryPanel(int panelWidth, int panelHeight)
 	{
-		
-		happyBackgroundSound= new MP3Player();
-		happyBackgroundSound.load("../sound/happy-background.mp3");
-		happyBackgroundSound.play();
-		
-		pauseSound=new MP3Player();
-		pauseSound.load("../sound/pause.mp3");
 		
 		//setting up StoryPanel
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
@@ -62,6 +58,13 @@ public class StoryPanel extends JPanel implements Runnable
 		
 		kListener=new KeyboardListener();
 		
+		//setting up Background Music
+		happyBackgroundSound= new MP3Player();
+		happyBackgroundSound.load("../sound/happy-background.mp3");
+		
+		pauseSound=new MP3Player();
+		pauseSound.load("../sound/pause.mp3");
+		
 		gamePanel= new GamePlayPanel(gamePanelX,gamePanelY, 
 									 gamePanelWidth, gamePanelHeight, kListener);
 		this.add(gamePanel);
@@ -84,6 +87,7 @@ public class StoryPanel extends JPanel implements Runnable
 		//Lets set up our thread and run it 
 		// The this here refers to the run() method as our JPanel implements Runnable
 		//This will automatically start the run() method
+		end=false;
 		Thread thread= new Thread(this);
 		thread.start();
 	}
@@ -91,7 +95,7 @@ public class StoryPanel extends JPanel implements Runnable
 	@Override
 	public void run() 
 	{
-		while (true)
+		while (!end)
 		{
 			//mp3Player
 			//-------------------------------------------------------
@@ -109,6 +113,7 @@ public class StoryPanel extends JPanel implements Runnable
 			{
 				updateScreen();//update
 				pauseSound.end();
+				happyBackgroundSound.play();
 				happyBackgroundSound.unPause();
 			}
 			else
@@ -148,6 +153,14 @@ public class StoryPanel extends JPanel implements Runnable
 		super.paint(page); //Displaying the default background (avoid flickering)
 		radar.drawImage(page, 450, 502);
 		navBar.drawImage(page, 0, 0);
+	}
+	
+	//safely ends process of run in the Story Panel
+	public void end()
+	{
+		end=true;
+		happyBackgroundSound.end();
+		pauseSound.end();
 	}
 	
 }
