@@ -9,6 +9,7 @@ public class MP3Player implements Runnable
 	private AudioInputStream din;
 	private AudioFormat decodedFormat;
 	private AudioInputStream in;
+	private SourceDataLine line;
 	private boolean play;
 	private boolean pause;
 	private boolean loaded;
@@ -50,6 +51,7 @@ public class MP3Player implements Runnable
 	public void unPause()
 	{
 		pause=false;
+		line.start(); // in case a pause was in place, else won't do anything
 	}	
 	
 	//Loads an mp3 file from a given URL
@@ -89,7 +91,6 @@ public class MP3Player implements Runnable
 			if (loaded)// if a URL has been loaded then perform actions
 			{
 				byte[] data = new byte[4096];
-				SourceDataLine line;
 				try 
 				{
 					line = getLine(decodedFormat);
@@ -106,7 +107,6 @@ public class MP3Player implements Runnable
 						{
 							if(!pause) // won't execute in pause mode
 							{
-								line.start(); // in case a pause was in place, else won't do anything
 								nBytesRead = din.read(data, 0, data.length);
 								if (nBytesRead != -1) nBytesWritten = line.write(data, 0, nBytesRead);
 							}

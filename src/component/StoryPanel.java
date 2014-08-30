@@ -9,7 +9,7 @@ import java.awt.*;
 public class StoryPanel extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = 5090489860496503908L;
-	private static final int DELAY = 5;
+	private static final int DELAY = 1;
 	private KeyboardListener kListener;	
 	//Background Image for game status
 	NavBar navBar;

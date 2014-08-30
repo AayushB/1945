@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import soundFactory.MP3Player;
+
 import background.MainMenu;
 
 public class MainMenuPanel extends JPanel implements Runnable
@@ -23,22 +25,28 @@ public class MainMenuPanel extends JPanel implements Runnable
 	private boolean howClicked=false;
 	private boolean scoreClicked=false;
 	private boolean creditsClicked=false;
+	//Theme
+	MP3Player theme;
 	//Thread
 	private Thread thread;
 	private boolean end;
 	
 	public MainMenuPanel(int panelWidth, int panelHeight)
 	{
-		background=new MainMenu("../img/sky.jpg");//placeholder for now
+		background=new MainMenu("../img/main-menu.png");//placeholder for now
 		//setting up Main Menu Panel
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		this.setDoubleBuffered(true);
 		this.setBackground(Color.blue);
 		this.setLayout(null);
 		
+		//set up theme music
+		theme=new MP3Player();
+		theme.load("../sound/air.mp3");
+		
 		//setting up user options
 		
-		playButton = new MenuButton(400, 250, 200, 70);
+		playButton = new MenuButton(400, 420, 200, 35);
 		playButton.setText("Play");
 		playButton.addActionListener(new ActionListener()
 		{
@@ -50,7 +58,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		});
 		this.add(playButton);
 		
-		howToPlayButton = new MenuButton(400, 330, 200, 70);
+		howToPlayButton = new MenuButton(400, 465, 200, 35);
 		howToPlayButton.setText("How to Play");
 		howToPlayButton.addActionListener(new ActionListener()
 		{
@@ -62,7 +70,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		});
 		this.add(howToPlayButton);
 		
-		highscoreButton = new MenuButton(400, 410, 200, 70);
+		highscoreButton = new MenuButton(400, 510, 200, 35);
 		highscoreButton.setText("High Score");
 		highscoreButton.addActionListener(new ActionListener()
 		{
@@ -74,7 +82,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		});
 		this.add(highscoreButton);
 		
-		creditsButton = new MenuButton(400, 490, 200, 70);
+		creditsButton = new MenuButton(400, 555, 200, 35);
 		creditsButton.setText("Credits");
 		creditsButton.addActionListener(new ActionListener()
 		{
@@ -151,7 +159,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		{
 			try 
 			{
-				Thread.sleep(1);
+				Thread.sleep(10);
 			} 
 			catch (InterruptedException e) {}
 			
@@ -164,13 +172,14 @@ public class MainMenuPanel extends JPanel implements Runnable
 		public void start()
 		{
 			end=false;
+			theme.play();
 			thread.start();
-			this.validate();
 		}
 		
 		//safely ends process of run in the Story Panel
 		public void end()
 		{
+			theme.end();
 			end=true;
 		}
 		

@@ -1,5 +1,8 @@
 package component;
 import javax.swing.*;
+
+import soundFactory.SoundClip;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,6 +16,8 @@ public class MenuButton extends JButton
 	private Color foreground;
 	private Color hoverForeground;
 	private Font  font;
+	private SoundClip hover;
+	private SoundClip click;
 	
 	public MenuButton(int x, int y, int width, int height)
 	{
@@ -35,6 +40,9 @@ public class MenuButton extends JButton
 		this.setBackground(background);
 		this.setForeground(foreground);
 		this.setFont(font);
+		//Sounds
+		hover=new SoundClip("../sound/menu-hover.wav");
+		click=new SoundClip("../sound/click.wav");
 		//Add mouse listener
 		this.addMouseListener(new MouseAdapter() 
 		{
@@ -42,13 +50,21 @@ public class MenuButton extends JButton
 			{
 				currentBackground=hoverBackground;
 		        MenuButton.this.setForeground(hoverForeground);
+		        MenuButton.this.hover.play();
+		        MenuButton.this.setCursor(new Cursor(12));
 		    }
 		    public void mouseExited(MouseEvent evt) 
 		    {
 		    	currentBackground=background;
-		    	 MenuButton.this.setForeground(foreground);
+		    	MenuButton.this.setForeground(foreground);
+		    }
+		    
+		    public void mouseClicked(MouseEvent evt)
+		    {
+		    	 MenuButton.this.click.play();
 		    }
 		});	
+		
 		this.setFocusable(true);
 	}
 	

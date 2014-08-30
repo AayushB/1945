@@ -77,7 +77,7 @@ public class StartingPoint extends Applet implements Runnable
 				//while in a different screen
 				try 
 				{
-					Thread.sleep(10);
+					Thread.sleep(1);
 				} 
 				catch (InterruptedException e) {}
 			}
