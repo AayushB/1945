@@ -9,7 +9,7 @@ import java.awt.*;
 public class StoryPanel extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = 5090489860496503908L;
-	private static final int DELAY = 1;
+	private static final int DELAY = 35;
 	private KeyboardListener kListener;	
 	//Background Image for game status
 	NavBar navBar;
@@ -25,7 +25,7 @@ public class StoryPanel extends JPanel implements Runnable
 	//Button Panel
 	private ButtonPanel playPausePanel;
 	private ButtonPanel settingsButtonPanel;
-	private ButtonPanel restartButtonPanel;
+	private ButtonPanel exitButtonPanel;
 	
 	private MP3Player happyBackgroundSound;
 	private MP3Player pauseSound;
@@ -39,7 +39,7 @@ public class StoryPanel extends JPanel implements Runnable
 		
 		//setting up StoryPanel
 		this.setPreferredSize(new Dimension(panelWidth, panelHeight));
-		this.setDoubleBuffered(true);
+		//this.setDoubleBuffered(true);
 		this.setBackground(Color.black);
 		this.setLayout(null);
 		
@@ -83,8 +83,8 @@ public class StoryPanel extends JPanel implements Runnable
 		settingsButtonPanel = new ButtonPanel(456,17,96,62);
 		this.add(settingsButtonPanel);
 		
-		restartButtonPanel = new ButtonPanel(574,17,96,62);
-		this.add(restartButtonPanel);
+		exitButtonPanel = new ButtonPanel(574,17,96,62);
+		this.add(exitButtonPanel);
 		
 		//Lets set up our thread and run it 
 		// The this here refers to the run() method as our JPanel implements Runnable
@@ -128,6 +128,7 @@ public class StoryPanel extends JPanel implements Runnable
 			//-------------------------------------------------------
 			
 			repaint(); //Calls the paint method and displays updated data accordingly
+			//Delays the thread
 			try 
 			{
 				Thread.sleep(DELAY);
@@ -169,9 +170,20 @@ public class StoryPanel extends JPanel implements Runnable
 	//safely ends process of run in the Story Panel
 	public void end()
 	{
-		end=true;
+		exitButtonPanel.setClicked(false);
 		happyBackgroundSound.end();
+		happyBackgroundSound.terminate();
+		//happyBackgroundSound=null;
 		pauseSound.end();
+		pauseSound.terminate();
+		//pauseSound=null;
+		end=true;
+	}
+	
+	//Get if exit is clicked
+	public boolean getExit()
+	{
+		return exitButtonPanel.getClicked();
 	}
 	
 }

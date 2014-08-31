@@ -11,7 +11,7 @@ public class Radar extends DrawableImage implements AnimatedImage
 	private static final int newHeight=height/5;
 	//private static final int xLocationSpriteSheet=none;
 	//private static final int yLocationSpriteSheet=none;
-	private static final int delay=5;// total delay to change animation frame
+	private static final int delay=1;// total delay to change animation frame
 	
 	private int frameNumber;// describes the frame number for radar animation
 	private int totalFrame;//total number of frames in radar animation

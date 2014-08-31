@@ -44,6 +44,7 @@ public class StartingPoint extends Applet implements Runnable
 			mainMenuPanel = new MainMenuPanel(appletWidth, appletHeight);
 			storyPanel= new StoryPanel(appletWidth, appletHeight, kListener);
 			
+			
 			//Start the thread
 			Thread thread= new Thread(this);
 			thread.start();
@@ -66,18 +67,30 @@ public class StartingPoint extends Applet implements Runnable
 					mainMenuPanel.end();
 					this.remove(mainMenuPanel);
 					//Add Story Panel to the applet
+					storyPanel=null;
+					storyPanel= new StoryPanel(appletWidth, appletHeight, kListener);
 					storyPanel.start();
 					this.add(storyPanel);			
-				}
-				
-				//Validate to Paint the story Panel
-				this.validate();
-				
+				}	
 				
 				//while in a different screen
+				if(storyPanel.getExit())
+				{
+					//do stuff
+					storyPanel.end();
+					this.remove(storyPanel);
+					mainMenuPanel=null;
+					mainMenuPanel = new MainMenuPanel(appletWidth, appletHeight);
+					mainMenuPanel.start();
+					this.add(mainMenuPanel);
+				}
+				
+				//Validate to Paint the a new Panel
+				this.validate();
+				
 				try 
 				{
-					Thread.sleep(1);
+					Thread.sleep(60);
 				} 
 				catch (InterruptedException e) {}
 			}

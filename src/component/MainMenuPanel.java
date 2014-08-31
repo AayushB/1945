@@ -180,6 +180,8 @@ public class MainMenuPanel extends JPanel implements Runnable
 		public void end()
 		{
 			theme.end();
+			theme.terminate();
+			//theme=null;
 			end=true;
 		}
 		

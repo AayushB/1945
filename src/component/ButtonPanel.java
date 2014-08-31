@@ -67,6 +67,11 @@ public class ButtonPanel extends JPanel {
 		return clicked;
 	}
 	
+	public void setClicked(boolean clicked)
+	{
+		this.clicked=clicked;
+	}
+	
 	@Override
 	public void paint(Graphics page)
 	{

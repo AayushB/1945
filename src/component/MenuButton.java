@@ -72,6 +72,7 @@ public class MenuButton extends JButton
 	{
 		page.setColor(currentBackground);
 		page.fillRoundRect(this.getX(), this.getY(), this.getWidth(), this.getHeight(), 25, 25);
+		page.fillRoundRect(this.getX()+2, this.getY()-2, this.getWidth(), this.getHeight(), 25, 25);
 	}
 	
 	public void setBackgroundColor(Color background)

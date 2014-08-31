@@ -12,8 +12,10 @@ public class MP3Player implements Runnable
 	private SourceDataLine line;
 	private boolean play;
 	private boolean pause;
+	private boolean terminate;
 	private boolean loaded;
 	private String mp3URL;
+	private static final int DELAY = 60;
 	
 	public MP3Player()
 	{
@@ -24,6 +26,7 @@ public class MP3Player implements Runnable
 		pause=false;
 		mp3URL=null;
 		loaded=false;
+		terminate=false;
 		
 		Thread thread = new Thread(this);
 		thread.start();
@@ -53,6 +56,12 @@ public class MP3Player implements Runnable
 		pause=false;
 		line.start(); // in case a pause was in place, else won't do anything
 	}	
+	
+	//terminates the mp3 player
+	public void terminate()
+	{
+		terminate=true;
+	}
 	
 	//Loads an mp3 file from a given URL
 	public void load(String mp3URL)
@@ -86,7 +95,7 @@ public class MP3Player implements Runnable
 	@Override
 	public void run()
 	{
-		while(true) // Keeps the music player going....
+		while(!terminate) // Keeps the music player going....
 		{
 			if (loaded)// if a URL has been loaded then perform actions
 			{
@@ -131,6 +140,12 @@ public class MP3Player implements Runnable
 			}
 			// Loads/Refreshes the mp3 URL again, when its complete
 			load(mp3URL);
+			//Delays the thread
+			try 
+			{
+				Thread.sleep(DELAY);
+			} 
+			catch (InterruptedException e) {}
 		}
 	}
 	
