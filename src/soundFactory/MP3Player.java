@@ -48,13 +48,17 @@ public class MP3Player implements Runnable
 	public void pause()
 	{
 		pause=true;
+		line.stop();
 	}
 
 	//Unpauses the mp3 file at the pause location
 	public void unPause()
 	{
 		pause=false;
+		if(line!=null)
+		{
 		line.start(); // in case a pause was in place, else won't do anything
+		}
 	}	
 	
 	//terminates the mp3 player
@@ -97,7 +101,7 @@ public class MP3Player implements Runnable
 	{
 		while(!terminate) // Keeps the music player going....
 		{
-			if (loaded)// if a URL has been loaded then perform actions
+			if (loaded && play && !pause)// if a URL has been loaded then perform actions
 			{
 				byte[] data = new byte[4096];
 				try 

@@ -58,20 +58,20 @@ public class MainMenuPanel extends JPanel implements Runnable
 		******************************************************************/
 		//Button Colors
 		Color buttonBackground= new Color(0,0,0,50);
-		Color buttonBackgroundHover= new Color (255,255,255,50);
+		Color buttonBackgroundHover= new Color (255,255,255,70);
 		Color buttonForeground= new Color(255,255,255);
-		Color buttonForegroundHover= new Color(0,0,0);
+		Color buttonForegroundHover= new Color(143,17,0);
 		String hoverSoundURL="../sound/menu-hover.wav";
 		String clickSoundURL="../sound/click.wav";
 		
 		//Button Location and size
-		playButton = new CustomButton(400, 420, 200, 35);
+		playButton = new CustomButton(400, 390, 200, 60);
 		howToPlayButton = new CustomButton(400, 465, 200, 35);
 		highscoreButton = new CustomButton(400, 510, 200, 35);
 		creditsButton = new CustomButton(400, 555, 200, 35);
 		
 		//Button Font
-		playButton.setFont("Haettenschweiler", Font.PLAIN, 30);
+		playButton.setFont("Haettenschweiler", Font.PLAIN, 50);
 		howToPlayButton.setFont("Haettenschweiler", Font.PLAIN, 30);
 		highscoreButton.setFont("Haettenschweiler", Font.PLAIN, 30);
 		creditsButton.setFont("Haettenschweiler", Font.PLAIN, 30);
