@@ -15,10 +15,10 @@ public class MainMenuPanel extends JPanel implements Runnable
 
 	private static final long serialVersionUID = -7343455852127981428L;
 	//Button Panel
-	private MenuButton playButton;
-	private MenuButton howToPlayButton;
-	private MenuButton highscoreButton;
-	private MenuButton creditsButton;	
+	private CustomButton playButton;
+	private CustomButton howToPlayButton;
+	private CustomButton highscoreButton;
+	private CustomButton creditsButton;	
 	private MainMenu background;
 	//Button clicked
 	private boolean playClicked=false;
@@ -46,7 +46,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		
 		//setting up user options
 		
-		playButton = new MenuButton(400, 420, 200, 35);
+		playButton = new CustomButton(400, 420, 200, 35);
 		playButton.setText("Play");
 		playButton.addActionListener(new ActionListener()
 		{
@@ -58,7 +58,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		});
 		this.add(playButton);
 		
-		howToPlayButton = new MenuButton(400, 465, 200, 35);
+		howToPlayButton = new CustomButton(400, 465, 200, 35);
 		howToPlayButton.setText("How to Play");
 		howToPlayButton.addActionListener(new ActionListener()
 		{
@@ -70,7 +70,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		});
 		this.add(howToPlayButton);
 		
-		highscoreButton = new MenuButton(400, 510, 200, 35);
+		highscoreButton = new CustomButton(400, 510, 200, 35);
 		highscoreButton.setText("High Score");
 		highscoreButton.addActionListener(new ActionListener()
 		{
@@ -82,7 +82,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		});
 		this.add(highscoreButton);
 		
-		creditsButton = new MenuButton(400, 555, 200, 35);
+		creditsButton = new CustomButton(400, 555, 200, 35);
 		creditsButton.setText("Credits");
 		creditsButton.addActionListener(new ActionListener()
 		{
