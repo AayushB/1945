@@ -45,6 +45,12 @@ public class CustomButton extends JButton
 		this.setFocusPainted(false);
 		//Set hover to false
 		hover=false;
+		
+		//default color
+		backgroundColor=Color.black;
+		hoverBackgroundColor=Color.white;
+		foregroundColor=Color.white;
+		hoverForegroundColor=Color.black;
 
 		/*****************************************************************
 		 * Add Mouse Listener to play sounds, change hover status,
@@ -55,7 +61,9 @@ public class CustomButton extends JButton
 			public void mouseEntered(MouseEvent evt) 
 			{
 				CustomButton.this.setForeground(hoverForegroundColor);
+				//Sets the cursor to hand cursor
 				CustomButton.this.setCursor(new Cursor(12));
+				//only play if the sound is not null
 				if(hoverSound!=null)
 				{
 					hoverSound.play();
@@ -71,6 +79,7 @@ public class CustomButton extends JButton
 		    
 		    public void mouseClicked(MouseEvent evt)
 		    {
+		    	//only play if the sound is not null
 		    	if(clickSound!=null)
 		    	{
 		    		clickSound.play();
@@ -92,7 +101,11 @@ public class CustomButton extends JButton
 							   this.getHeight(), 25, 25);
 			page.fillRoundRect(this.getX()+2, this.getY()-2, 
 							   this.getWidth(), this.getHeight(), 25, 25);
-			hoverImage.drawImage(page, this.getX(), this.getY());
+			//only draw if the image is not null
+			if(hoverImage!=null)
+			{
+				hoverImage.drawImage(page, this.getX(), this.getY());
+			}
 		}
 		else // Draw Non Hovered Parts
 		{
@@ -101,7 +114,11 @@ public class CustomButton extends JButton
 					   this.getHeight(), 25, 25);
 			page.fillRoundRect(this.getX()+2, this.getY()-2, 
 					   this.getWidth(), this.getHeight(), 25, 25);
-			backgroundImage.drawImage(page, this.getX(), this.getY());
+			//only draw if the image is not null
+			if(backgroundImage!=null)
+			{
+				backgroundImage.drawImage(page, this.getX(), this.getY());
+			}
 		}
 	}
 
