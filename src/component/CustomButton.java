@@ -51,6 +51,9 @@ public class CustomButton extends JButton
 		hoverBackgroundColor=Color.white;
 		foregroundColor=Color.white;
 		hoverForegroundColor=Color.black;
+		//Apply default color
+		this.setBackground(backgroundColor);
+		this.setForeground(foregroundColor);
 
 		/*****************************************************************
 		 * Add Mouse Listener to play sounds, change hover status,
@@ -201,6 +204,18 @@ public class CustomButton extends JButton
 	public void setHoverImage(String imageURL)
 	{
 		this.hoverImage= new DrawableImage(imageURL);
+	}
+	
+	//Setting up sounds 
+	
+	public void setHoverSound(String soundURL)
+	{
+		this.hoverSound=new SoundClip(soundURL);
+	}
+	
+	public void setClickSound(String soundURL)
+	{
+		this.clickSound=new SoundClip(soundURL);
 	}
 	
 	/*****************************************************************/
