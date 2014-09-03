@@ -1,17 +1,18 @@
 package component;
 import javax.swing.*;
-
-import soundFactory.MP3Player;
-
+import soundFactory.*;
 import background.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class StoryPanel extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = 5090489860496503908L;
 	private static final int DELAY = 35;
+	
+	//Thread
+	private Thread thread;
+	private boolean end;
 	
 	//Keyboard Listener
 	private KeyboardListener kListener;	
@@ -37,12 +38,9 @@ public class StoryPanel extends JPanel implements Runnable
 	private boolean settingsClicked=false;
 	private boolean exitClicked=false;
 	
+	//For the purposes of playing the background music
 	private MP3Player happyBackgroundSound;
 	private MP3Player pauseSound;
-	
-	//Thread
-	private Thread thread;
-	private boolean end;
 	
 	public StoryPanel(int panelWidth, int panelHeight, KeyboardListener kListener)
 	{
@@ -98,9 +96,9 @@ public class StoryPanel extends JPanel implements Runnable
 		settingsButton = new CustomButton(456,17,96,62);
 		exitButton = new CustomButton(574,17,96,62);
 		
-		pauseButton.setText("Pause");
-		settingsButton.setText("Settings");
-		exitButton.setText("Exit");
+		pauseButton.setText("Settings Image");
+		settingsButton.setText("Restart Image");
+		exitButton.setText("Exit Image");
 		
 		pauseButton.setHoverSound(hoverSoundURL);
 		settingsButton.setHoverSound(hoverSoundURL);
@@ -145,6 +143,7 @@ public class StoryPanel extends JPanel implements Runnable
 		
 		/*****************************************************************/
 		
+		//User Panels to display the information regarding the player
 		
 		player1StatsPanel = new PlayerStatsPanel(165,507,250,85);
 		this.add(player1StatsPanel);
@@ -159,7 +158,6 @@ public class StoryPanel extends JPanel implements Runnable
 	{
 		while (!end)
 		{
-			//mp3Player
 			//-------------------------------------------------------
 			//					Main code here
 			//-------------------------------------------------------
@@ -169,8 +167,8 @@ public class StoryPanel extends JPanel implements Runnable
 			//only pause when only one of them is true
 			boolean pause= !(kListener.pPressed()==pauseClicked);
 			gamePanel.setPause((pause));
-			//mp3Player=null;
-			////pause or unpause story panel
+			
+			//pause or unpause story panel
 			if(!pause)
 			{
 				updateScreen();//update
@@ -237,10 +235,10 @@ public class StoryPanel extends JPanel implements Runnable
 		exitClicked=false;
 		happyBackgroundSound.end();
 		happyBackgroundSound.terminate();
-		//happyBackgroundSound=null;
+		happyBackgroundSound=null;
 		pauseSound.end();
 		pauseSound.terminate();
-		//pauseSound=null;
+		pauseSound=null;
 		end=true;
 	}
 	

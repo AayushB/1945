@@ -139,6 +139,11 @@ public class Player extends CollidableObject implements MobileObject
 			if (this.right <= scr.getRight())
 			xLocation+=velocity;
 		}
+		else
+		{
+			if (this.bottom <= scr.getbottom())
+				yLocation+=velocity-1;
+		}
 		
 		//Updates Location Information for plane and collision
 		updateLocation(xLocation, yLocation);

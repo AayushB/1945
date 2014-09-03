@@ -10,7 +10,7 @@ public class BigOrangeAirplane extends DrawableImage implements AnimatedImage
 	private static final int newHeight=height;
 	//private static final int xLocationSpriteSheet=none;
 	private static final int yLocationSpriteSheet=412;
-	private static final int delay=20;// total delay to change animation frame
+	private static final int delay=5;// total delay to change animation frame
 	
 	private int frameNumber;// describes the frame number for plane animation
 	private int totalFrame; // total number of frames in an animation

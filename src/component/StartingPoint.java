@@ -7,17 +7,21 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class StartingPoint extends Applet implements Runnable
 {
 	private static final long serialVersionUID = 1729212401853792501L;
-	private MainMenuPanel mainMenuPanel;
-	private StoryPanel storyPanel;
+	
 	private int appletWidth;
 	private int appletHeight;
 	private KeyboardListener kListener;
+	
+	private MainMenuPanel mainMenuPanel;
+	private StoryPanel storyPanel;
+	private HelpPanel helpPanel;
+	
 	
 	//Initialize the Applet
 		@Override
 		public void init() 
 		{
-			//Platform independence for swing
+			//Platform independence for swing look and feel
 		    try 
 		    {
 				UIManager.setLookAndFeel(
@@ -43,7 +47,7 @@ public class StartingPoint extends Applet implements Runnable
 			//setting up component panels
 			mainMenuPanel = new MainMenuPanel(appletWidth, appletHeight);
 			storyPanel= new StoryPanel(appletWidth, appletHeight, kListener);
-			
+			helpPanel= new HelpPanel(appletWidth, appletHeight);
 			
 			//Start the thread
 			Thread thread= new Thread(this);
@@ -73,16 +77,37 @@ public class StartingPoint extends Applet implements Runnable
 					this.add(storyPanel);			
 				}	
 				
+			   if(mainMenuPanel.getHowToPlayClicked())
+				{
+					//Remove main menu from the applet
+					mainMenuPanel.setHowToPlayClicked(false);
+					mainMenuPanel.end();
+					this.remove(mainMenuPanel);
+					//Add Help Panel to the applet
+					this.add(helpPanel);
+				}
+				
+
 				//while in a different screen
 				if(storyPanel.getExit())
 				{
 					//do stuff
 					storyPanel.end();
 					this.remove(storyPanel);
-					mainMenuPanel=null;
+					//mainMenuPanel=null;
 					mainMenuPanel = new MainMenuPanel(appletWidth, appletHeight);
 					mainMenuPanel.start();
 					this.add(mainMenuPanel);
+				}
+				else if(helpPanel.getExit())
+				{
+					helpPanel.end();
+					this.remove(helpPanel);
+					//mainMenuPanel=null;
+					mainMenuPanel = new MainMenuPanel(appletWidth, appletHeight);
+					mainMenuPanel.start();
+					this.add(mainMenuPanel);
+					
 				}
 				
 				//Validate to Paint the a new Panel

@@ -12,7 +12,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = -665006501171953584L;
 	//Defining FPS for the screen
-	private static final int DELAY = 10;
+	private static final int DELAY = 15;
 	//Listens to Keyboard
 	//Defined Game Screen
 	ScreenDimension scr;
@@ -50,12 +50,12 @@ public class GamePlayPanel extends JPanel implements Runnable
 		int initY=370;//initial Y location of the plane
 		player1= new Player(initX,initY,new BigOrangeAirplane("../img/spritesheet.png")
 		 , new BigOrangeAirplane("../img/spritesheet-shadow.png"), kListener, scr);
-		player1.setVelocity(3); // setting up player1 speed
+		player1.setVelocity(2); // setting up player1 speed
 		//player1.setBorderVisibility(true);
 		
 		oceanGradient= new OceanGradient("../img/ocean-gradient.png");
 		ocean= new Ocean();
-		ocean.setVelocity(1);// How fast the ocean moves
+		ocean.setVelocity(2);// How fast the ocean moves
 		
 		//Lets set up our thread and run it 
 		// The this here refers to the run() method as our JPanel implements Runnable

@@ -57,7 +57,7 @@ public class MainMenuPanel extends JPanel implements Runnable
 		* Colors, Sounds and Action Listeners
 		******************************************************************/
 		//Button Colors
-		Color buttonBackground= new Color(0,0,0,50);
+		Color buttonBackground= new Color(0,0,0,30);
 		Color buttonBackgroundHover= new Color (255,255,255,70);
 		Color buttonForeground= new Color(255,255,255);
 		Color buttonForegroundHover= new Color(143,17,0);
@@ -65,13 +65,13 @@ public class MainMenuPanel extends JPanel implements Runnable
 		String clickSoundURL="../sound/click.wav";
 		
 		//Button Location and size
-		playButton = new CustomButton(400, 390, 200, 60);
-		howToPlayButton = new CustomButton(400, 465, 200, 35);
-		highscoreButton = new CustomButton(400, 510, 200, 35);
-		creditsButton = new CustomButton(400, 555, 200, 35);
+		playButton = new CustomButton(410, 435, 200, 35);
+		howToPlayButton = new CustomButton(410, 475, 200, 35);
+		highscoreButton = new CustomButton(410, 515, 200, 35);
+		creditsButton = new CustomButton(410, 555, 200, 35);
 		
 		//Button Font
-		playButton.setFont("Haettenschweiler", Font.PLAIN, 50);
+		playButton.setFont("Haettenschweiler", Font.PLAIN, 30);
 		howToPlayButton.setFont("Haettenschweiler", Font.PLAIN, 30);
 		highscoreButton.setFont("Haettenschweiler", Font.PLAIN, 30);
 		creditsButton.setFont("Haettenschweiler", Font.PLAIN, 30);
