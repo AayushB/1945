@@ -46,8 +46,7 @@ public class Ocean implements MobileObject
 	}
 
 	//updating the precise location of the ocean in a component
-	@Override
-	public void updateLocation(int x, int y) 
+	private void updateLocation(int x, int y) 
 	{
 		xLocation=x;
 		yLocation=y;

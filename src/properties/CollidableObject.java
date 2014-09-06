@@ -19,7 +19,15 @@ public class CollidableObject
 		this.right=x+image.getWidth();
 		this.top=y;
 		this.bottom=y+image.getHeight();
-		
+		drawCollisionBorder=false;
+	}
+	
+	public CollidableObject(int x, int y, int width, int height)
+	{
+		this.left=x;
+		this.right=x+width;
+		this.top=y;
+		this.bottom=y+height;
 		drawCollisionBorder=false;
 	}
 	

@@ -42,7 +42,7 @@ public class Player extends CollidableObject implements MobileObject
 		this.kListener=kListener;// KeyBoard Listener
 	}
 	
-	public void updateLocation(int x, int y)
+	private void updateLocation(int x, int y)
 	{
 		//Updates Image 
 		this.xLocation=x;

@@ -1,9 +1,11 @@
 package component;
+import gameObjects.CObject;
 import gameObjects.Player;
 import javax.swing.*;
 
 import properties.ScreenDimension;
 import characterImage.BigOrangeAirplane;
+import CollisionEngine.CollisionEngine;
 import background.Ocean;
 import background.OceanGradient;
 import java.awt.*;
@@ -23,7 +25,10 @@ public class GamePlayPanel extends JPanel implements Runnable
 	private Ocean ocean;
 	private OceanGradient oceanGradient;
 	private Player player1;
+	private CObject c;
 	//---------------------------------------------------------//
+	
+	CollisionEngine collisionEngine;
 	
 	//Thread
 	private Thread thread;
@@ -50,12 +55,19 @@ public class GamePlayPanel extends JPanel implements Runnable
 		int initY=370;//initial Y location of the plane
 		player1= new Player(initX,initY,new BigOrangeAirplane("../img/spritesheet.png")
 		 , new BigOrangeAirplane("../img/spritesheet-shadow.png"), kListener, scr);
-		player1.setVelocity(2); // setting up player1 speed
+		player1.setVelocity(3); // setting up player1 speed
 		//player1.setBorderVisibility(true);
+		
+		c= new CObject(200,0, new BigOrangeAirplane("../img/spritesheet.png"));
+		//c.setBorderVisibility(true);
+		
+		collisionEngine= new CollisionEngine();
+		collisionEngine.add(player1);
+		collisionEngine.add(c);
 		
 		oceanGradient= new OceanGradient("../img/ocean-gradient.png");
 		ocean= new Ocean();
-		ocean.setVelocity(2);// How fast the ocean moves
+		ocean.setVelocity(1);// How fast the ocean moves
 		
 		//Lets set up our thread and run it 
 		// The this here refers to the run() method as our JPanel implements Runnable
@@ -92,6 +104,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 		//Updating Screen Contents
 		ocean.update();
 		player1.update();
+		c.update();
 	}	
 	@Override
 	public void paint(Graphics page)
@@ -102,6 +115,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 		ocean.draw(page);
 		player1.drawShadow(page);
 		player1.draw(page);
+		c.draw(page);
 		drawPauseScreen(page);
 	}
 	

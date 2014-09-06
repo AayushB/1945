@@ -84,6 +84,7 @@ public class StartingPoint extends Applet implements Runnable
 					mainMenuPanel.end();
 					this.remove(mainMenuPanel);
 					//Add Help Panel to the applet
+					helpPanel=new HelpPanel(appletWidth,appletHeight);
 					this.add(helpPanel);
 				}
 				
