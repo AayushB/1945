@@ -26,7 +26,7 @@ public class BattleShip extends CollidableObject implements MobileObject
 		this.xLocation=x;
 		this.yLocation=y;
 		//default velocity
-		this.velocity=0;
+		this.setVelocity(0);
 	}
 
 	@Override
@@ -53,8 +53,16 @@ public class BattleShip extends CollidableObject implements MobileObject
 		shipImage.updateImage();//Animates the ship
 		//Updates Location Information for plane and collision
 		//updateLocation(xLocation, yLocation);
-		yLocation++;
+		yLocation+=velocity;
 		
+	}
+
+	public int getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(int velocity) {
+		this.velocity = velocity;
 	}
 	
 }

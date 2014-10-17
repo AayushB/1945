@@ -1,11 +1,16 @@
 package component;
+//import gameObjects.BattleShip;
 import gameObjects.BattleShip;
 import gameObjects.Player;
+import gameObjects.RedWhitePlane;
+
 import javax.swing.*;
 
 import properties.ScreenDimension;
 import characterImage.BattleShipImage;
+//import characterImage.BattleShipImage;
 import characterImage.BigOrangeAirplane;
+import characterImage.RedWhitePlaneImage;
 import CollisionEngine.CollisionEngine;
 import background.Ocean;
 import background.OceanGradient;
@@ -27,6 +32,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 	private OceanGradient oceanGradient;
 	private Player player1;
 	private BattleShip ship;
+	private RedWhitePlane plane;
 	//---------------------------------------------------------//
 	
 	CollisionEngine collisionEngine;
@@ -59,8 +65,13 @@ public class GamePlayPanel extends JPanel implements Runnable
 		player1.setVelocity(3); // setting up player1 speed
 		//player1.setBorderVisibility(true);
 		
-		ship= new BattleShip(500,-200, new BattleShipImage("../img/spritesheet.png"),
+    	ship= new BattleShip(500,-200, new BattleShipImage("../img/spritesheet.png"),
 								  new BattleShipImage("../img/spritesheet-shadow.png"));
+    	ship.setVelocity(1);
+		plane= new RedWhitePlane(500,-200, new RedWhitePlaneImage("../img/spritesheet.png"),
+				  new RedWhitePlaneImage("../img/spritesheet-shadow.png"));
+		plane.setVelocity(3);
+		
 		//c= new CObject(200,0, new BigOrangeAirplane("../img/spritesheet.png"));
 		//ship.setBorderVisibility(true);
 		
@@ -108,6 +119,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 		ocean.update();
 		player1.update();
 		ship.update();
+		plane.update();
 		//c.update();
 	}	
 	@Override
@@ -119,6 +131,9 @@ public class GamePlayPanel extends JPanel implements Runnable
 		ocean.draw(page);
 		ship.drawShadow(page);
 		ship.draw(page);
+		plane.drawShadow(page);
+		plane.draw(page);
+		
 		player1.drawShadow(page);
 		player1.draw(page);
 		//c.draw(page);
