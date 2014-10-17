@@ -1,9 +1,10 @@
 package component;
-import gameObjects.CObject;
+import gameObjects.BattleShip;
 import gameObjects.Player;
 import javax.swing.*;
 
 import properties.ScreenDimension;
+import characterImage.BattleShipImage;
 import characterImage.BigOrangeAirplane;
 import CollisionEngine.CollisionEngine;
 import background.Ocean;
@@ -25,7 +26,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 	private Ocean ocean;
 	private OceanGradient oceanGradient;
 	private Player player1;
-	private CObject c;
+	private BattleShip ship;
 	//---------------------------------------------------------//
 	
 	CollisionEngine collisionEngine;
@@ -58,12 +59,14 @@ public class GamePlayPanel extends JPanel implements Runnable
 		player1.setVelocity(3); // setting up player1 speed
 		//player1.setBorderVisibility(true);
 		
-		c= new CObject(200,0, new BigOrangeAirplane("../img/spritesheet.png"));
-		//c.setBorderVisibility(true);
+		ship= new BattleShip(500,-200, new BattleShipImage("../img/spritesheet.png"),
+								  new BattleShipImage("../img/spritesheet-shadow.png"));
+		//c= new CObject(200,0, new BigOrangeAirplane("../img/spritesheet.png"));
+		//ship.setBorderVisibility(true);
 		
-		collisionEngine= new CollisionEngine();
-		collisionEngine.add(player1);
-		collisionEngine.add(c);
+		//collisionEngine= new CollisionEngine();
+		//collisionEngine.add(player1);
+		//collisionEngine.add(c);
 		
 		oceanGradient= new OceanGradient("../img/ocean-gradient.png");
 		ocean= new Ocean();
@@ -104,7 +107,8 @@ public class GamePlayPanel extends JPanel implements Runnable
 		//Updating Screen Contents
 		ocean.update();
 		player1.update();
-		c.update();
+		ship.update();
+		//c.update();
 	}	
 	@Override
 	public void paint(Graphics page)
@@ -113,9 +117,11 @@ public class GamePlayPanel extends JPanel implements Runnable
 		//Drawing Screen Contents
 		oceanGradient.drawImage(page, 0, 0);
 		ocean.draw(page);
+		ship.drawShadow(page);
+		ship.draw(page);
 		player1.drawShadow(page);
 		player1.draw(page);
-		c.draw(page);
+		//c.draw(page);
 		drawPauseScreen(page);
 	}
 	
