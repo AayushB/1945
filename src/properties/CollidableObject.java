@@ -1,11 +1,10 @@
 package properties;
 
 import imageFactory.DrawableImage;
-
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class CollidableObject 
+public abstract class CollidableObject 
 {
 	protected int left;
 	protected int right;
@@ -30,6 +29,8 @@ public class CollidableObject
 		this.bottom=y+height;
 		drawCollisionBorder=false;
 	}
+	
+	public abstract void notify(CollidableObject cObject);
 	
 	protected void updateCollisionBoundry(int newX, int newY, DrawableImage image)
 	{
@@ -63,4 +64,7 @@ public class CollidableObject
 	{
 		return drawCollisionBorder;
 	}
+
+	
+		
 }

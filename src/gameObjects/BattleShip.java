@@ -64,5 +64,12 @@ public class BattleShip extends CollidableObject implements MobileObject
 	public void setVelocity(int velocity) {
 		this.velocity = velocity;
 	}
+
+	@Override
+	public void notify(CollidableObject cObject)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

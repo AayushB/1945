@@ -149,4 +149,11 @@ public class Player extends CollidableObject implements MobileObject
 		updateLocation(xLocation, yLocation);
 		
 	}
+
+	@Override
+	public void notify(CollidableObject cObject) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }
