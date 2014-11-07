@@ -1,7 +1,5 @@
 package gameObjects;
-
 import java.awt.Graphics;
-
 import characterImage.BattleShipImage;
 import properties.CollidableObject;
 import properties.MobileObject;
@@ -54,14 +52,19 @@ public class BattleShip extends CollidableObject implements MobileObject
 		//Updates Location Information for plane and collision
 		//updateLocation(xLocation, yLocation);
 		yLocation+=velocity;
-		
+		//Updates CollisionBorder Location
+		this.updateCollisionBoundry(xLocation, yLocation, shipImage);
 	}
 
-	public int getVelocity() {
+	//Get the velocity
+	public int getVelocity() 
+	{
 		return velocity;
 	}
 
-	public void setVelocity(int velocity) {
+	//set the speed/velocity of the object
+	public void setVelocity(int velocity)
+	{
 		this.velocity = velocity;
 	}
 

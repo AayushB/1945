@@ -15,7 +15,8 @@ public class StoryPanel extends JPanel implements Runnable
 	private boolean end;
 	
 	//Keyboard Listener
-	private KeyboardListener kListener;	
+	private KeyboardListenerA kListenerA;	
+	private KeyboardListenerB kListenerB;
 	
 	//Background Image for game status
 	NavBar navBar;
@@ -42,7 +43,7 @@ public class StoryPanel extends JPanel implements Runnable
 	private MP3Player happyBackgroundSound;
 	private MP3Player pauseSound;
 	
-	public StoryPanel(int panelWidth, int panelHeight, KeyboardListener kListener)
+	public StoryPanel(int panelWidth, int panelHeight, KeyboardListenerA kListenerA, KeyboardListenerB kListenerB)
 	{
 		//Lets set up our thread and run it 
 		// The this here refers to the run() method as our JPanel implements Runnable				//This will automatically start the run() method
@@ -69,12 +70,14 @@ public class StoryPanel extends JPanel implements Runnable
 		int gamePanelHeight=415;
 	
 		//setting up KeyboardListener
-		this.kListener=kListener;
-		this.addKeyListener(kListener);
+		this.kListenerA=kListenerA;
+		this.addKeyListener(kListenerA);
+		this.kListenerB=kListenerB;
+		this.addKeyListener(kListenerB);
 		
 		//SetUp Game Panel and add it to this container
 		gamePanel= new GamePlayPanel(gamePanelX,gamePanelY, 
-				 gamePanelWidth, gamePanelHeight, kListener);
+				 gamePanelWidth, gamePanelHeight, kListenerA, kListenerB);
 		this.add(gamePanel);
 		
 		//setting up Background Music
@@ -165,7 +168,7 @@ public class StoryPanel extends JPanel implements Runnable
 			//pause or unpause the gamepanel
 			//xor logic for connecting buttons pause with keyboard p
 			//only pause when only one of them is true
-			boolean pause= !(kListener.pPressed()==pauseClicked);
+			boolean pause= !(kListenerA.pPressed()==pauseClicked);
 			gamePanel.setPause((pause));
 			
 			//pause or unpause story panel

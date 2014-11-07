@@ -4,10 +4,10 @@ import imageFactory.DrawableImage;
 
 public class MainMenu extends DrawableImage
 {
-	private static final int width= 1000;
-	private static final int height=616;
-	private static final int newWidth= width; 
-	private static final int newHeight=height;
+	private int width= 1000;
+	private int height=616;
+	private int newWidth= width; 
+	private int newHeight=height;
 	
 	public MainMenu(String imageURL)
 	{

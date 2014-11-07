@@ -1,19 +1,11 @@
 package component;
-//import gameObjects.BattleShip;
-import gameObjects.BattleShip;
-import gameObjects.Player;
-import gameObjects.RedWhitePlane;
 
+import characterImage.*;
+import gameObjects.*;
+import background.*;
+import properties.*;
+import CollisionEngine.*;
 import javax.swing.*;
-
-import properties.ScreenDimension;
-import characterImage.BattleShipImage;
-//import characterImage.BattleShipImage;
-import characterImage.BigOrangeAirplane;
-import characterImage.RedWhitePlaneImage;
-import CollisionEngine.CollisionEngine;
-import background.Ocean;
-import background.OceanGradient;
 import java.awt.*;
 
 public class GamePlayPanel extends JPanel implements Runnable
@@ -26,13 +18,11 @@ public class GamePlayPanel extends JPanel implements Runnable
 	ScreenDimension scr;
 	//Pause-Play feature of the game
 	private  boolean pause;
-	
 	//-------------------------Screen Visible Contents----------//
 	private Ocean ocean;
 	private OceanGradient oceanGradient;
 	private Player player1;
-	private BattleShip ship;
-	private RedWhitePlane plane;
+	private Player player2;
 	//---------------------------------------------------------//
 	
 	CollisionEngine collisionEngine;
@@ -41,44 +31,38 @@ public class GamePlayPanel extends JPanel implements Runnable
 	private Thread thread;
 	private boolean end;
 		
-	public GamePlayPanel(int x, int y, int width, int height, KeyboardListener kListener)
+	public GamePlayPanel(int x, int y, int width, int height, KeyboardListenerA kListenerA, KeyboardListenerB kListenerB)
 	{
 		//setting up screenDimension
 		scr=new ScreenDimension(0,0,width,height);
-		
 		//setting up GamePlayPanel
-
 		setBounds(x, y, width, height);
 		setDoubleBuffered(true);
-		
 		//setting up keyboard listener
-		this.addKeyListener(kListener);
-		
+		this.addKeyListener(kListenerA);
+		this.addKeyListener(kListenerB);
 		//pause feature
 		pause=false;
-		
 		//Setting up screen contents
-		int initX=462;//initial X Location of the plane
+		int initX=662;//initial X Location of the plane
 		int initY=370;//initial Y location of the plane
-		player1= new Player(initX,initY,new BigOrangeAirplane("../img/spritesheet.png")
-		 , new BigOrangeAirplane("../img/spritesheet-shadow.png"), kListener, scr);
+		player1=new Player(initX,initY,(BigAirplaneImage) CharacterImage.image.get("BigOrangeAirplane"),
+				(BigAirplaneImage) CharacterImage.image.get("BigOrangeAirplaneShadow"), kListenerA, scr);
 		player1.setVelocity(3); // setting up player1 speed
 		//player1.setBorderVisibility(true);
 		
-    	ship= new BattleShip(500,-200, new BattleShipImage("../img/spritesheet.png"),
-								  new BattleShipImage("../img/spritesheet-shadow.png"));
-    	ship.setVelocity(1);
-		plane= new RedWhitePlane(500,-200, new RedWhitePlaneImage("../img/spritesheet.png"),
-				  new RedWhitePlaneImage("../img/spritesheet-shadow.png"));
-		plane.setVelocity(3);
 		
-		//c= new CObject(200,0, new BigOrangeAirplane("../img/spritesheet.png"));
-		//ship.setBorderVisibility(true);
+		//Setting up screen contents
+		initX=262;//initial X Location of the plane
+		initY=370;//initial Y location of the plane
+		player2=new Player(initX,initY,(BigAirplaneImage) CharacterImage.image.get("BigGreenAirplane"),
+				(BigAirplaneImage) CharacterImage.image.get("BigGreenAirplaneShadow"), kListenerB, scr);
+		player2.setVelocity(3); // setting up player1 speed
+		//player1.setBorderVisibility(true);
 		
-		//collisionEngine= new CollisionEngine();
-		//collisionEngine.add(player1);
-		//collisionEngine.add(c);
-		
+		collisionEngine= new CollisionEngine();
+		collisionEngine.add(player1);
+
 		oceanGradient= new OceanGradient("../img/ocean-gradient.png");
 		ocean= new Ocean();
 		ocean.setVelocity(1);// How fast the ocean moves
@@ -118,9 +102,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 		//Updating Screen Contents
 		ocean.update();
 		player1.update();
-		ship.update();
-		plane.update();
-		//c.update();
+		player2.update();
 	}	
 	@Override
 	public void paint(Graphics page)
@@ -129,14 +111,10 @@ public class GamePlayPanel extends JPanel implements Runnable
 		//Drawing Screen Contents
 		oceanGradient.drawImage(page, 0, 0);
 		ocean.draw(page);
-		ship.drawShadow(page);
-		ship.draw(page);
-		plane.drawShadow(page);
-		plane.draw(page);
-		
 		player1.drawShadow(page);
+		player2.drawShadow(page);
 		player1.draw(page);
-		//c.draw(page);
+		player2.draw(page);
 		drawPauseScreen(page);
 	}
 	
@@ -171,16 +149,16 @@ public class GamePlayPanel extends JPanel implements Runnable
 	}
 	
 	//Start
-		public void start()
-		{
-			end=false;
-			thread.start();
-		}
-		
-		//safely ends process of run in the Story Panel
-		public void end()
-		{
-			end=true;
-		}
+	public void start()
+	{
+		end=false;
+		thread.start();
+	}
+	
+	//safely ends process of run in the Story Panel
+	public void end()
+	{
+		end=true;
+	}
 
 }

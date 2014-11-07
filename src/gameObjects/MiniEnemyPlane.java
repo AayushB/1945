@@ -1,24 +1,24 @@
 package gameObjects;
 
 import java.awt.Graphics;
-
-import characterImage.RedWhitePlaneImage;
+import characterImage.MiniAirplaneImage;
 import properties.CollidableObject;
 import properties.MobileObject;
 
 
-public class RedWhitePlane extends CollidableObject implements MobileObject{
+public class MiniEnemyPlane extends CollidableObject implements MobileObject
+{
 	
 	//Images
-		private RedWhitePlaneImage planeImage;
-		private RedWhitePlaneImage shadowImage;
+		private MiniAirplaneImage planeImage;
+		private MiniAirplaneImage shadowImage;
 		//Location in component
 		private int xLocation;//x Location on the component
 		private int yLocation;//y Location on the component
 		//Velocity of the Player
 		private int velocity;
 
-	public RedWhitePlane(int x, int y, RedWhitePlaneImage planeImage, RedWhitePlaneImage shadowImage) {
+	public MiniEnemyPlane(int x, int y, MiniAirplaneImage planeImage, MiniAirplaneImage shadowImage) {
 		super(x, y, planeImage);
 		this.planeImage=planeImage;
 		this.shadowImage=shadowImage;

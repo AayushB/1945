@@ -35,7 +35,6 @@ public class CollisionEngine implements Runnable
 			
 			index++;
 		}
-
 	}
 
 	@Override
@@ -50,6 +49,8 @@ public class CollisionEngine implements Runnable
 					if(collidableList.get(i).collidesWith(collidableList.get(j)))
 					{
 						System.out.println("collision");
+						collidableList.get(i).notify(collidableList.get(j));
+						collidableList.get(j).notify(collidableList.get(i));
 					}
 				}				
 			}			

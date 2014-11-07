@@ -1,16 +1,17 @@
 package gameObjects;
 import java.awt.Graphics;
-import component.KeyboardListener;
+import component.KeyboardListenerA;
+import component.KeyboardListenerB;
 import properties.CollidableObject;
 import properties.MobileObject;
 import properties.ScreenDimension;
-import characterImage.BigOrangeAirplane;
+import characterImage.BigAirplaneImage;
 
 public class Player extends CollidableObject implements MobileObject
 {
 	//Images
-	private BigOrangeAirplane planeImage;
-	private BigOrangeAirplane shadowImage;
+	private BigAirplaneImage planeImage;
+	private BigAirplaneImage shadowImage;
 	//Location in component
 	private int xLocation;//x Location on the component
 	private int yLocation;//y Location on the component
@@ -19,11 +20,13 @@ public class Player extends CollidableObject implements MobileObject
 	//Screen Dimension player can exist in
 	ScreenDimension scr;
 	//Listener for keyboard
-	private KeyboardListener kListener;
+	private KeyboardListenerA kListenerA;
+	private KeyboardListenerB kListenerB;
+	private boolean A;
 	
-	public Player(	int x, int y,
-					BigOrangeAirplane planeImage, BigOrangeAirplane shadowImage,
-					KeyboardListener kListener, ScreenDimension scr)
+	public Player(int x, int y,
+					BigAirplaneImage planeImage, BigAirplaneImage shadowImage,
+					KeyboardListenerA kListener, ScreenDimension scr)
 	{
 		//Setup Collidable Object
 		super(x,y,planeImage);
@@ -36,11 +39,34 @@ public class Player extends CollidableObject implements MobileObject
 		this.xLocation=x;
 		this.yLocation=y;
 		//changing the size of the image of the shadow
-		this.shadowImage.newDimension((int)(shadowImage.getWidth()/1.5),
-									(int)(shadowImage.getHeight()/1.5));
+		this.shadowImage.newDimension((int)(shadowImage.getWidth()/1.2),
+									(int)(shadowImage.getHeight()/1.2));
 		velocity=0;//default velocity of the plane
-		this.kListener=kListener;// KeyBoard Listener
+		this.kListenerA=kListener;// KeyBoard Listener
+		A=true;
 	}
+	
+	public Player(int x, int y,
+			BigAirplaneImage planeImage, BigAirplaneImage shadowImage,
+			KeyboardListenerB kListener, ScreenDimension scr)
+{
+		//Setup Collidable Object
+		super(x,y,planeImage);
+		//setup screen Dimension
+		this.scr=scr;
+		//setup Plane and Shadow Image
+		this.planeImage=planeImage;
+		this.shadowImage=shadowImage;
+		//Setting up the location of the Player in the component
+		this.xLocation=x;
+		this.yLocation=y;
+		//changing the size of the image of the shadow
+		this.shadowImage.newDimension((int)(shadowImage.getWidth()/1.2),
+									(int)(shadowImage.getHeight()/1.2));
+		velocity=0;//default velocity of the plane
+		this.kListenerB=kListener;// KeyBoard Listener
+		A=false;
+}
 	
 	private void updateLocation(int x, int y)
 	{
@@ -84,67 +110,132 @@ public class Player extends CollidableObject implements MobileObject
 	public void update() 
 	{
 		planeImage.updateImage();//Animates the plane
-		
-		//Updating based on keyBoard Listener
-		if(kListener.downPressed() && kListener.leftPressed())
+		if(A)
 		{
-			//Comparing if plane is outside of screen scr
-			if (this.bottom <= scr.getbottom() && this.left >= scr.getLeft())
+
+			//Updating based on keyBoard Listener
+			if(kListenerA.downPressed() && kListenerA.leftPressed())
 			{
-				yLocation+=velocity;
-				xLocation-=velocity;
+				//Comparing if plane is outside of screen scr
+				if (this.bottom <= scr.getbottom() && this.left >= scr.getLeft())
+				{
+					yLocation+=velocity;
+					xLocation-=velocity;
+				}
 			}
-		}
-		else if(kListener.downPressed() && kListener.rightPressed())
-		{
-			if (this.bottom <= scr.getbottom() && this.right <= scr.getRight())
+			else if(kListenerA.downPressed() && kListenerA.rightPressed())
 			{
-				yLocation+=velocity;
+				if (this.bottom <= scr.getbottom() && this.right <= scr.getRight())
+				{
+					yLocation+=velocity;
+					xLocation+=velocity;
+				}
+			}
+			else if(kListenerA.upPressed() && kListenerA.leftPressed())
+			{
+				if (this.top >= scr.getTop() && this.left >= scr.getLeft())
+				{
+					yLocation-=velocity;
+					xLocation-=velocity;
+				}
+			}
+			else if(kListenerA.upPressed() && kListenerA.rightPressed())
+			{
+				if (this.top >= scr.getTop() && this.right <= scr.getRight())
+				{ 
+					yLocation-=velocity;
+					xLocation+=velocity;
+				}
+			}
+			else if (kListenerA.downPressed())
+			{
+				if (this.bottom <= scr.getbottom())
+					yLocation+=velocity;
+			}
+			else if (kListenerA.upPressed())
+			{
+				if (this.top >= scr.getTop())
+					yLocation-=velocity;
+			}
+			else if (kListenerA.leftPressed())
+			{
+				if (this.left >= scr.getLeft())
+					xLocation-=velocity;
+			}
+			else if (kListenerA.rightPressed())
+			{
+				if (this.right <= scr.getRight())
 				xLocation+=velocity;
 			}
-		}
-		else if(kListener.upPressed() && kListener.leftPressed())
-		{
-			if (this.top >= scr.getTop() && this.left >= scr.getLeft())
+			else
 			{
-				yLocation-=velocity;
-				xLocation-=velocity;
+				if (this.bottom <= scr.getbottom())
+					yLocation+=velocity-1;
 			}
-		}
-		else if(kListener.upPressed() && kListener.rightPressed())
-		{
-			if (this.top >= scr.getTop() && this.right <= scr.getRight())
-			{ 
-				yLocation-=velocity;
-				xLocation+=velocity;
-			}
-		}
-		else if (kListener.downPressed())
-		{
-			if (this.bottom <= scr.getbottom())
-				yLocation+=velocity;
-		}
-		else if (kListener.upPressed())
-		{
-			if (this.top >= scr.getTop())
-				yLocation-=velocity;
-		}
-		else if (kListener.leftPressed())
-		{
-			if (this.left >= scr.getLeft())
-				xLocation-=velocity;
-		}
-		else if (kListener.rightPressed())
-		{
-			if (this.right <= scr.getRight())
-			xLocation+=velocity;
+			
 		}
 		else
 		{
-			if (this.bottom <= scr.getbottom())
-				yLocation+=velocity-1;
+			//Updating based on keyBoard Listener
+			if(kListenerB.downPressed() && kListenerB.leftPressed())
+			{
+				//Comparing if plane is outside of screen scr
+				if (this.bottom <= scr.getbottom() && this.left >= scr.getLeft())
+				{
+					yLocation+=velocity;
+					xLocation-=velocity;
+				}
+			}
+			else if(kListenerB.downPressed() && kListenerB.rightPressed())
+			{
+				if (this.bottom <= scr.getbottom() && this.right <= scr.getRight())
+				{
+					yLocation+=velocity;
+					xLocation+=velocity;
+				}
+			}
+			else if(kListenerB.upPressed() && kListenerB.leftPressed())
+			{
+				if (this.top >= scr.getTop() && this.left >= scr.getLeft())
+				{
+					yLocation-=velocity;
+					xLocation-=velocity;
+				}
+			}
+			else if(kListenerB.upPressed() && kListenerB.rightPressed())
+			{
+				if (this.top >= scr.getTop() && this.right <= scr.getRight())
+				{ 
+					yLocation-=velocity;
+					xLocation+=velocity;
+				}
+			}
+			else if (kListenerB.downPressed())
+			{
+				if (this.bottom <= scr.getbottom())
+					yLocation+=velocity;
+			}
+			else if (kListenerB.upPressed())
+			{
+				if (this.top >= scr.getTop())
+					yLocation-=velocity;
+			}
+			else if (kListenerB.leftPressed())
+			{
+				if (this.left >= scr.getLeft())
+					xLocation-=velocity;
+			}
+			else if (kListenerB.rightPressed())
+			{
+				if (this.right <= scr.getRight())
+				xLocation+=velocity;
+			}
+			else
+			{
+				if (this.bottom <= scr.getbottom())
+					yLocation+=velocity-1;
+			}
 		}
-		
 		//Updates Location Information for plane and collision
 		updateLocation(xLocation, yLocation);
 		
@@ -153,7 +244,10 @@ public class Player extends CollidableObject implements MobileObject
 	@Override
 	public void notify(CollidableObject cObject) 
 	{
-		// TODO Auto-generated method stub
+		if (cObject instanceof gameObjects.RedWhitePlane)
+		{
+			//do something
+		}
 		
 	}
 }

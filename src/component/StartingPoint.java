@@ -10,7 +10,8 @@ public class StartingPoint extends Applet implements Runnable
 	
 	private int appletWidth;
 	private int appletHeight;
-	private KeyboardListener kListener;
+	private KeyboardListenerA kListenerA;
+	private KeyboardListenerB kListenerB;
 	
 	private MainMenuPanel mainMenuPanel;
 	private StoryPanel storyPanel;
@@ -41,12 +42,14 @@ public class StartingPoint extends Applet implements Runnable
 			this.setSize(appletWidth, appletHeight); // width, height
 			this.setBackground(Color.BLACK); 
 			this.setFocusable(true);
-			kListener=new KeyboardListener();
-			this.addKeyListener(kListener);
+			kListenerA=new KeyboardListenerA();
+			this.addKeyListener(kListenerA);
+			kListenerB=new KeyboardListenerB();
+			this.addKeyListener(kListenerB);
 			
 			//setting up component panels
 			mainMenuPanel = new MainMenuPanel(appletWidth, appletHeight);
-			storyPanel= new StoryPanel(appletWidth, appletHeight, kListener);
+			storyPanel= new StoryPanel(appletWidth, appletHeight, kListenerA, kListenerB);
 			helpPanel= new HelpPanel(appletWidth, appletHeight);
 			
 			//Start the thread
@@ -72,7 +75,7 @@ public class StartingPoint extends Applet implements Runnable
 					this.remove(mainMenuPanel);
 					//Add Story Panel to the applet
 					storyPanel=null;
-					storyPanel= new StoryPanel(appletWidth, appletHeight, kListener);
+					storyPanel= new StoryPanel(appletWidth, appletHeight, kListenerA, kListenerB);
 					storyPanel.start();
 					this.add(storyPanel);			
 				}	

@@ -1,9 +1,9 @@
 package properties;
-
 import imageFactory.DrawableImage;
 import java.awt.Color;
 import java.awt.Graphics;
 
+//Abstract Collidable Object
 public abstract class CollidableObject 
 {
 	protected int left;
@@ -12,6 +12,7 @@ public abstract class CollidableObject
 	protected int bottom;
 	private boolean drawCollisionBorder;
 	
+	//Constructor requiring an image
 	public CollidableObject(int x, int y, DrawableImage image)
 	{
 		this.left=x;
@@ -21,6 +22,7 @@ public abstract class CollidableObject
 		drawCollisionBorder=false;
 	}
 	
+	//Constructor requiring no image
 	public CollidableObject(int x, int y, int width, int height)
 	{
 		this.left=x;
@@ -30,6 +32,7 @@ public abstract class CollidableObject
 		drawCollisionBorder=false;
 	}
 	
+	//Notifies collidable Object of what it collides with
 	public abstract void notify(CollidableObject cObject);
 	
 	protected void updateCollisionBoundry(int newX, int newY, DrawableImage image)
@@ -40,6 +43,7 @@ public abstract class CollidableObject
 		this.bottom=newY+image.getHeight();
 	}
 	
+	//Rectangle collision logic
 	public boolean collidesWith(CollidableObject co)
 	{
 		//Logic of two rectangles colliding with one another
@@ -49,17 +53,20 @@ public abstract class CollidableObject
 			        || co.bottom < top);
 	}
 	
+	//Draws collision boundary
 	public void drawCollisionBorder(Graphics page, int x, int y, int width, int height)
 	{
 		page.setColor(Color.green);
 		page.drawRect(x, y, width, height);
 	}
 	
+	//Set the collision boundary to true
 	public void setBorderVisibility(boolean value)
 	{
 		drawCollisionBorder=value;
 	}
 	
+	//Returns the status of border visibility
 	public boolean getBorderVisibility()
 	{
 		return drawCollisionBorder;
