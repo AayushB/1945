@@ -2,7 +2,7 @@ package component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyboardListenerB implements KeyListener 
+public class KeyboardListenerB implements KeyListener, MyKeyControls 
 {
 	private boolean leftPressed;
 	private boolean rightPressed;
@@ -93,5 +93,17 @@ public class KeyboardListenerB implements KeyListener
 	public boolean downPressed()
 	{
 		return downPressed;
+	}
+
+	@Override
+	public boolean spacePressed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pPressed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

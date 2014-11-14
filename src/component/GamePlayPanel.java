@@ -47,7 +47,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 		int initX=662;//initial X Location of the plane
 		int initY=370;//initial Y location of the plane
 		player1=new Player(initX,initY,(BigAirplaneImage) CharacterImage.image.get("BigOrangeAirplane"),
-				(BigAirplaneImage) CharacterImage.image.get("BigOrangeAirplaneShadow"), kListenerA, scr);
+				(BigAirplaneImage) CharacterImage.image.get("BigOrangeAirplaneShadow"),(MyKeyControls) kListenerA, scr);
 		player1.setVelocity(3); // setting up player1 speed
 		//player1.setBorderVisibility(true);
 		
@@ -56,7 +56,7 @@ public class GamePlayPanel extends JPanel implements Runnable
 		initX=262;//initial X Location of the plane
 		initY=370;//initial Y location of the plane
 		player2=new Player(initX,initY,(BigAirplaneImage) CharacterImage.image.get("BigGreenAirplane"),
-				(BigAirplaneImage) CharacterImage.image.get("BigGreenAirplaneShadow"), kListenerB, scr);
+				(BigAirplaneImage) CharacterImage.image.get("BigGreenAirplaneShadow"),(MyKeyControls) kListenerB, scr);
 		player2.setVelocity(3); // setting up player1 speed
 		//player1.setBorderVisibility(true);
 		

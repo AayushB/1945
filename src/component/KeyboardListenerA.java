@@ -2,7 +2,7 @@ package component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyboardListenerA implements KeyListener 
+public class KeyboardListenerA implements KeyListener, MyKeyControls
 {
 	private boolean leftPressed;
 	private boolean rightPressed;
